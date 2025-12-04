@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
-import { FiShoppingCart, FiUser } from "react-icons/fi"; // react-icons
+import { FiShoppingCart, FiUser } from "react-icons/fi";
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext.jsx";
 
 export default function Header() {
+  const { cartItems } = useContext(CartContext); // ✅ get cartItems from context
+
   return (
     <header className="bg-[#f9f1f5] shadow-sm text-gray-900 py-6 px-6 md:px-[85px] flex items-center justify-between sticky top-0 z-50 gap-6">
       {/* Logo */}
@@ -34,7 +38,7 @@ export default function Header() {
         />
       </div>
 
-      {/* Navigation Links */}
+      {/* Navigation */}
       <nav className="flex-shrink-0 flex items-center gap-6">
         <ul className="hidden md:flex gap-6">
           <li>
@@ -63,10 +67,16 @@ export default function Header() {
         <div className="flex items-center gap-4 ml-4">
           <Link
             to="/cart"
-            className="text-gray-700 hover:text-[#EF4444] transition"
+            className="relative text-gray-700 hover:text-[#EF4444] transition"
           >
             <FiShoppingCart size={22} />
+            {cartItems.length > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">
+                {cartItems.length}
+              </span>
+            )}
           </Link>
+
           <Link
             to="/account"
             className="text-gray-700 hover:text-[#EF4444] transition"

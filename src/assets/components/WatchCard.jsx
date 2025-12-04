@@ -1,10 +1,17 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext.jsx";
 
 export default function WatchCard({ watch }) {
+  const { addToCart } = useContext(CartContext);
+
   return (
-    <div className="flex flex-col items-center group relative">
-      <Link to={`/watch/${watch.id}`} className="flex flex-col items-center">
-        <div className="w-48 h-48 rounded-lg overflow-hidden flex justify-center items-center transition transform hover:-translate-y-4 hover:scale-105 p-2 relative">
+    <div className="flex flex-col items-center  relative  hover:shadow-lg transition">
+      <Link
+        to={`/watch/${watch.id}`}
+        className="flex flex-col items-center w-full"
+      >
+        <div className="w-48 h-48 rounded-lg overflow-hidden flex justify-center items-center transition transform p-2 relative">
           <img
             src={watch.img}
             alt={watch.name}
@@ -31,6 +38,14 @@ export default function WatchCard({ watch }) {
           )}
         </div>
       </Link>
+
+      {/* Add to Cart Text */}
+      <p
+        className="mt-3 text-gray-900 underline cursor-pointer hover:text-[#8c233f] transition"
+        onClick={() => addToCart({ ...watch, quantity: 1 })}
+      >
+        Add to Cart
+      </p>
     </div>
   );
 }
